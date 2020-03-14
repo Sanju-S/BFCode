@@ -1,5 +1,12 @@
 import sys
 
+code = []
+var_hold = []
+var = {}
+inp = {}
+
+file = open('/home/sanju/code/bf/test.bf', 'w')
+
 def write(i):
 	global file
 	n = ord(i)
@@ -39,12 +46,6 @@ def prnt(c):
 		write(i)
 	nl()
 
-code = []
-var_hold = []
-var = {}
-inp = {}
-
-file = open('/home/sanju/code/bf/test.bf', 'w')
 
 while True:
 	c = input("-> ").split()
@@ -62,7 +63,10 @@ while True:
 		if len(c) < 2:
 			print("Error")
 		else:
-			pp = len(var_hold)
-			for j in ' '.join(c[2:]):
-				var_hold.append(j)
-			var[c[0]] = str(pp)+':'+str(len(var_hold))
+			if c[3] in ['+', '-']:
+				pass
+			else:
+				pp = len(var_hold)
+				for j in ' '.join(c[2:]):
+					var_hold.append(j)
+				var[c[0]] = str(pp)+':'+str(len(var_hold))
