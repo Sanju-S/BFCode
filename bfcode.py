@@ -8,8 +8,9 @@ inp = {}
 file = open('/home/sanju/code/bf/test.bf', 'w')
 
 def write(i):
-	global file
+	global file, code
 	n = ord(i)
+	code.append(i)
 	if n < 11:
 		file.write('>'+'+'*n+'.')
 	else:
@@ -23,28 +24,45 @@ def prnt():
 	file.write('.')
 
 def nl():
-	global file
+	global file, code
+	code.append('\n')
 	file.write('>++[>+++++<-]>.')
 
 def prnt(c):
-	global var, var_hold
+	global var, var_hold, code
 	l = []
-	for k in c[1:]:
+	for e, k in enumerate(c[1:]):
 		if k.startswith('$'):
 			if k[1:] in var:
 				s = int(var[k[1:]].split(':')[0])
 				e = int(var[k[1:]].split(':')[1])
 				st = ''.join(var_hold[s:e])
-				l.append(st)
+				for i in st:
+					write(i)
+			elif k[1:] in inp:
+				s = int(inp[k[1:]])
+				num = (len(code)-(s+1))*2
+				file.write('<'*num+'.'+'>'*num)
 			else:
 				print("Error: var not found")
 		else:
-			l.append(k)
-	l = ' '.join(l)
-	for i in l:
-		code.append(i)
-		write(i)
+			for i in k:
+				write(i)
+		if len(c[1:]) != e+1:
+			write(' ')
 	nl()
+
+def read(c):
+	global var, var_hold, code, inp
+	if len(c) > 2:
+		prnt(c[1:])
+		inp[c[1]] = len(code)
+		code.append(',')
+		file.write(',')
+	else:
+		inp[c[1]] = len(code)
+		code.append(',')
+		file.write(',')
 
 
 while True:
@@ -59,11 +77,16 @@ while True:
 			prnt(c)
 		else:
 			nl()
-	elif c[1] == '=':
+	elif c[0] == 'read':
 		if len(c) < 2:
 			print("Error")
 		else:
-			if c[3] in ['+', '-']:
+			read(c)
+	elif '=' in c:
+		if len(c) < 2:
+			print("Error")
+		else:
+			if '+' in c:
 				pass
 			else:
 				pp = len(var_hold)
