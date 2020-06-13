@@ -5,7 +5,11 @@ var_hold = []
 var = {}
 inp = {}
 
-file = open('/home/sanju/code/bf/test.bf', 'w')
+if sys.argv < 2:
+	print("Usage: python3 bfcode.py <filename>")
+	sys.exit(1)
+
+file = open(sys.argv[1], 'w')
 
 def write(i):
 	global file, code
