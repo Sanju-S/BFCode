@@ -5,7 +5,7 @@ var_hold = []
 var = {}
 inp = {}
 
-if sys.argv < 2:
+if len(sys.argv) < 2:
 	print("Usage: python3 bfcode.py <filename>")
 	sys.exit(1)
 
